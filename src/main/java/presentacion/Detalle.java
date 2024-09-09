@@ -6,6 +6,7 @@ package presentacion;
 
 import dominio.Cliente;
 import javax.swing.JOptionPane;
+import negocio.ClienteDTO;
 import negocio.ClientesBO;
 
 /**
@@ -14,13 +15,13 @@ import negocio.ClientesBO;
  */
 public class Detalle extends javax.swing.JFrame {
 
-    private Cliente clienteOriginal;
+    private ClienteDTO clienteOriginal;
     private ClientesBO clientesBO;
 
     /**
      * Creates new form Detalle
      */
-    public Detalle(Cliente clienteOriginal) {
+    public Detalle(ClienteDTO clienteOriginal) {
         initComponents();
         this.clienteOriginal = clienteOriginal;
         clientesBO = ClientesBO.getInstance();
@@ -46,6 +47,7 @@ public class Detalle extends javax.swing.JFrame {
         bntActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Detalle cliente");
 
         jLabel1.setText("ID:");
 
@@ -77,48 +79,50 @@ public class Detalle extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(btnVolver)
-                .addGap(78, 78, 78)
-                .addComponent(btnEliminar)
-                .addGap(58, 58, 58)
-                .addComponent(bntActualizar)
-                .addContainerGap(82, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(1, 1, 1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                    .addComponent(txtNombre))
-                .addGap(149, 149, 149))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                            .addComponent(txtNombre)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(btnVolver)
+                        .addGap(81, 81, 81)
+                        .addComponent(btnEliminar)
+                        .addGap(65, 65, 65)
+                        .addComponent(bntActualizar)))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(63, 63, 63)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVolver)
                     .addComponent(btnEliminar)
                     .addComponent(bntActualizar))
-                .addGap(107, 107, 107))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntActualizarActionPerformed
-        clientesBO.actualizarCliente(clienteOriginal, new Cliente(txtID.getText(), txtNombre.getText()));
+        clientesBO.actualizarCliente(clienteOriginal, new ClienteDTO(txtID.getText(), txtNombre.getText()));
         Inicio inicio = new Inicio();
         inicio.setVisible(true);
         this.dispose();
@@ -127,7 +131,7 @@ public class Detalle extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int option = JOptionPane.showConfirmDialog(this, "Seguro que desea eliminar al cliente?");
         if (option == JOptionPane.YES_OPTION) {
-            clientesBO.eliminarCliente(new Cliente(txtID.getText(), txtNombre.getText()));
+            clientesBO.eliminarCliente(new ClienteDTO(txtID.getText(), txtNombre.getText()));
             Inicio inicio = new Inicio();
             inicio.setVisible(true);
             this.dispose();

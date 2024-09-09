@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+import persistencia.ClienteDAO;
 
 /**
  *
@@ -18,62 +19,61 @@ public class ClientesBO {
 
     private static List<Cliente> clientes;
     private static ClientesBO instance;
-    
-    
-    private ClientesBO() {
-      }
+    private static ClienteDAO clientesDAO;
 
-    public static ClientesBO getInstance(){
-         if (instance == null){
+    private ClientesBO() {
+    }
+
+    public static ClientesBO getInstance() {
+        if (instance == null) {
             instance = new ClientesBO();
             clientes = new ArrayList<>();
+            clientesDAO = ClienteDAO.getInstance();
 //            llenarLista();
         }
         return instance;
     }
-    
-    public void addCliente(Cliente cliente) {
-        this.clientes.add(cliente);
+
+    public void addCliente(ClienteDTO cliente) {
+        this.clientesDAO.addCliente(new Cliente(cliente.getID(),cliente.getNombre()));
     }
-    
-    
-    public void llenarLista(){
-        this.addCliente(new Cliente("00222","David"));
-        this.addCliente(new Cliente("00223","SI"));
+
+    public void llenarLista() {
+//        this.addCliente(new Cliente("00222", "David"));
+//        this.addCliente(new Cliente("00223", "SI"));
     }
-    
-    public List<Cliente> getClientes(){
+
+    public List<ClienteDTO> getClientes() {
+        List<Cliente> lc = clientesDAO.getClientes();
+        List<ClienteDTO> clientes = new ArrayList<>();
+        for (Cliente c : lc) {
+            clientes.add(new ClienteDTO(c.getID(),c.getNombre()));
+        }
         return clientes;
     }
-    
-    public Cliente encontrarCliente(Cliente cliente){
-    Optional<Cliente> clienteConsultado = clientes.stream().filter(p->p.getID().equalsIgnoreCase(cliente.getID())).filter(p->p.getNombre().equalsIgnoreCase(cliente.getNombre())).findAny();
-        
-        if (clienteConsultado.isPresent()){
-            return clienteConsultado.get();
 
-        }
-        return null;
+    public ClienteDTO encontrarCliente(ClienteDTO cliente) {
+        Cliente c = clientesDAO.encontrarCliente(new Cliente(cliente.getID(),cliente.getNombre()));
+        return new ClienteDTO(c.getID(),c.getNombre());
     }
-    public void actualizarCliente(Cliente clienteInfo,Cliente clienteNuevo){
-        Optional<Cliente> clienteConsultado = clientes.stream().filter(p->p.getID().equalsIgnoreCase(clienteInfo.getID())).filter(p->p.getNombre().equalsIgnoreCase(clienteInfo.getNombre())).findAny();
-        
-        if (clienteConsultado.isPresent()){
-            Cliente cliente = clienteConsultado.get();
-            cliente.setID(clienteNuevo.getID());
-            cliente.setNombre(clienteNuevo.getNombre());
-        }
-    }
-    public void eliminarCliente(Cliente cliente){
-            Optional<Cliente> clienteConsultado = clientes.stream().filter(p->p.getID().equalsIgnoreCase(cliente.getID())).filter(p->p.getNombre().equalsIgnoreCase(cliente.getNombre())).findFirst();
-        
-        if (clienteConsultado.isPresent()){
-            clientes.remove(clienteConsultado.get());
-        }
-    }
-    
-    public List<Cliente> encontrarClientes(Cliente cliente){
-        return clientes.stream().filter(p->p.getID().contains(cliente.getID())).filter(p->p.getNombre().contains(cliente.getNombre())).toList();
 
+    public void actualizarCliente(ClienteDTO clienteInfo, ClienteDTO clienteNuevo) {
+        Cliente ci = new Cliente(clienteInfo.getID(),clienteInfo.getNombre());
+        Cliente cn = new Cliente(clienteNuevo.getID(),clienteNuevo.getNombre());
+        clientesDAO.actualizarCliente(ci, cn);
+    }
+
+    public void eliminarCliente(ClienteDTO cliente) {
+        Cliente c = new Cliente(cliente.getID(),cliente.getNombre());
+        clientesDAO.eliminarCliente(c);
+    }
+
+    public List<ClienteDTO> encontrarClientes(ClienteDTO cliente) {
+        List<Cliente> lc = clientesDAO.encontrarClientes(new Cliente(cliente.getID(),cliente.getNombre()));
+        List<ClienteDTO> clientes = new ArrayList<>();
+        for (Cliente c : lc) {
+            clientes.add(new ClienteDTO(c.getID(),c.getNombre()));
+        }
+        return clientes;
     }
 }

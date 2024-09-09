@@ -1,4 +1,6 @@
+presentacion\Inicio$6.class
 presentacion\Agregar$1.class
+persistencia\ClienteDAO.class
 presentacion\Detalle$3.class
 presentacion\Inicio$3.class
 presentacion\Detalle.class
@@ -9,6 +11,7 @@ dominio\Cliente.class
 negocio\ClientesBO.class
 presentacion\Inicio.class
 presentacion\Inicio$4.class
+negocio\ClienteDTO.class
 presentacion\Agregar.class
 presentacion\Inicio$1.class
 presentacion\Inicio$5.class
