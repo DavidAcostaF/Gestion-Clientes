@@ -12,4 +12,11 @@
         <exec.mainClass>com.mycompany.gestioncliente.GestionCliente</exec.mainClass>
     </properties>
     <name>GestionClientes</name>
+    <dependencies>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.21.2</version>
+        </dependency>
+    </dependencies>
 </project>
