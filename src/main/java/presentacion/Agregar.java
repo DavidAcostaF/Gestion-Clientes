@@ -10,13 +10,25 @@ import negocio.ClienteDTO;
 import negocio.ClientesBO;
 
 /**
- *
+ * La clase Agregar permite agregar nuevos clientes al sistema. 
+ * Esta ventana extiende JFrame y proporciona un formulario para 
+ * ingresar los detalles del cliente, validarlos, y añadirlos utilizando la 
+ * lógica de negocio proporcionada por ClientesBO.
+ * 
+ * Se incluye la validación de campos para asegurar que los datos ingresados 
+ * cumplan con ciertos criterios y que el ID del cliente no esté duplicado.
+ * 
  * @author af_da
  */
 public class Agregar extends javax.swing.JFrame {
+    
     private ClientesBO clientesBO;
+    
     /**
-     * Creates new form Agregar
+     * Crea una nueva ventana Agregar.
+     * 
+     * Inicializa los componentes gráficos y establece una instancia de 
+     * ClientesBO para manejar la lógica de adición de clientes.
      */
     public Agregar() {
         initComponents();
@@ -47,6 +59,11 @@ public class Agregar extends javax.swing.JFrame {
         jLabel2.setText("Nombre:");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -101,6 +118,16 @@ public class Agregar extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción que se ejecuta al presionar el botón "Agregar".
+     * 
+     * Verifica que los campos de texto sean válidos (ID y nombre no vacíos, 
+     * ID en formato correcto, y que no esté duplicado), luego agrega el nuevo 
+     * cliente utilizando ClientesBO y vuelve a la ventana principal 
+     * Inicio.
+     * 
+     * @param evt el evento de acción generado al presionar el botón.
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if (validarCampos(txtID.getText(), txtNombre.getText())) {
             String id = txtID.getText();
@@ -112,24 +139,49 @@ public class Agregar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private boolean validarCampos(String id, String nombre){
+    /**
+     * Acción que se ejecuta al presionar el botón "Cancelar".
+     *
+     * Permite cancelar la operación actual y regresar a la ventana anterior.
+     *
+     * @param evt el evento de acción generado al presionar el botón.
+     */
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        Inicio inicio = new Inicio();
+        inicio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    /**
+     * Valida los campos del formulario.
+     * 
+     * Verifica que los campos de ID y nombre no estén vacíos, que el ID 
+     * tenga el formato correcto (debe comenzar con "CL" seguido de números), 
+     * y que el ID no esté ya registrado en el sistema.
+     * 
+     * @param id el ID del cliente ingresado
+     * @param nombre el nombre del cliente ingresado
+     * @return true si los campos son válidos, false de lo contrario
+     */
+    private boolean validarCampos(String id, String nombre) {
         if (id.isBlank() && nombre.isBlank()) {
             JOptionPane.showMessageDialog(this, "El id y nombre no pueden estar vacios", "Revisar información", JOptionPane.INFORMATION_MESSAGE);
             return false;
         } else {
-            if(!id.matches("CL\\d+")){
-                JOptionPane.showMessageDialog(this, "El id debe tener un formato 'CL1' donde el numero puede cambiar","información", JOptionPane.INFORMATION_MESSAGE);
+            if (!id.matches("CL\\d+")) {
+                JOptionPane.showMessageDialog(this, "El id debe tener un formato 'CL1' donde el numero puede cambiar", "información", JOptionPane.INFORMATION_MESSAGE);
                 return false;
             } else {
-                ClienteDTO cliente = new ClienteDTO(id, nombre);
-                ClienteDTO clienteExistente = clientesBO.encontrarCliente(cliente);
-                if (clienteExistente != null) {
-                    JOptionPane.showMessageDialog(this, "El id ya se encuentra registrado","información", JOptionPane.INFORMATION_MESSAGE);
+                ClienteDTO cliente = clientesBO.encontrarClienteID(id);
+                if (cliente != null) {
+                    JOptionPane.showMessageDialog(this, "El id ya se encuentra registrado", "información", JOptionPane.INFORMATION_MESSAGE);
                     return false;
+
                 }
+
             }
         }
-        
+
         return true;
     }
 

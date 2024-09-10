@@ -8,6 +8,7 @@ presentacion\Inicio$3.class
 presentacion\Detalle.class
 presentacion\Detalle$2.class
 presentacion\Inicio$2.class
+presentacion\Agregar$2.class
 presentacion\Detalle$1.class
 dominio\Cliente.class
 negocio\ClientesBO.class

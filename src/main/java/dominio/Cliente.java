@@ -5,7 +5,7 @@
 package dominio;
 
 /**
- * La clase {@code Cliente} representa a un cliente dentro del sistema.
+ * La clase Cliente representa a un cliente dentro del sistema.
  * Un cliente tiene un identificador único y un nombre.
  * 
  * Se proporcionan métodos para obtener y modificar ambos atributos.
@@ -35,19 +35,38 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    
+    /**
+     * Devuelve el identificador único del cliente.
+     * 
+     * @return El identificador único del cliente.
+     */
     public String getID() {
         return ID;
     }
 
+    /**
+     * Establece el identificador único del cliente.
+     * 
+     * @param ID El nuevo identificador único del cliente.
+     */
     public void setID(String ID) {
         this.ID = ID;
     }
 
+    /**
+     * Devuelve el nombre del cliente.
+     * 
+     * @return El nombre del cliente.
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * Establece el nombre del cliente.
+     * 
+     * @param nombre El nuevo nombre del cliente.
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

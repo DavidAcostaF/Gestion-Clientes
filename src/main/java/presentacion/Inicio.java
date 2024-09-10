@@ -15,7 +15,15 @@ import negocio.ClientesBO;
 import negocio.GenerarReportes;
 
 /**
- *
+ * La clase Inicio es una ventana principal de la aplicación que permite
+ * visualizar, buscar y gestionar clientes. Esta clase extiende JFrame y 
+ * utiliza la funcionalidad de ClientesBO para manejar la lógica de negocio 
+ * de los clientes, además de ofrecer la capacidad de generar reportes.
+ * 
+ * La clase proporciona métodos para cargar y actualizar una tabla de clientes, 
+ * buscar clientes dinámicamente y abrir ventanas adicionales para agregar o ver 
+ * detalles de un cliente.
+ * 
  * @author af_da
  */
 public class Inicio extends javax.swing.JFrame {
@@ -24,7 +32,12 @@ public class Inicio extends javax.swing.JFrame {
     private GenerarReportes reporte;
     
     /**
-     * Creates new form Inicio
+     * Crea una nueva ventana de Inicio.
+     * 
+     * Inicializa los componentes gráficos de la ventana, carga la lista de 
+     * clientes desde ClientesBO, y llena la tabla con los datos 
+     * correspondientes. También establece un {MouseListener para manejar 
+     * clics en la tabla y mostrar detalles del cliente seleccionado.
      */
     public Inicio() {
         initComponents();
@@ -53,7 +66,11 @@ public class Inicio extends javax.swing.JFrame {
         });
     }
 
-    
+    /**
+     * Llena la tabla de clientes con los datos proporcionados.
+     * 
+     * @param clientes una lista de objetos ClienteDTO que se mostrará en la tabla.
+     */
     private void llenarTabla(List<ClienteDTO> clientes) {
         DefaultTableModel table = (DefaultTableModel) tableClientes.getModel();
             // Limpiar todas las filas de la tabla antes de agregar nuevas
@@ -63,6 +80,10 @@ public class Inicio extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Realiza una consulta dinámica de clientes en base al ID y nombre ingresados 
+     * en los campos de búsqueda.
+     */
     private void consultaDinamica(){
         String id = txtBuscarid.getText();
         String nombre = txtBuscarNombre.getText();
@@ -224,31 +245,69 @@ public class Inicio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción para abrir la ventana de agregar un nuevo cliente.
+     * 
+     * @param evt el evento de acción
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         Agregar agregar = new Agregar();
         agregar.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    /**
+     * Acción que se ejecuta cuando el usuario busca un cliente por id.
+     * 
+     * @param evt el evento de acción
+     */
     private void txtBuscaridKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaridKeyTyped
     }//GEN-LAST:event_txtBuscaridKeyTyped
 
+    /**
+     * Acción que se ejecuta cuando el usuario busca un cliente por nombre.
+     * 
+     * @param evt el evento de acción
+     */
     private void txtBuscarNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarNombreKeyTyped
     }//GEN-LAST:event_txtBuscarNombreKeyTyped
 
+    /**
+     * Acción que se ejecuta cuando el usuario busca un cliente por id.
+     * 
+     * @param evt el evento de acción
+     */
     private void txtBuscaridKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscaridKeyReleased
         consultaDinamica();
     }//GEN-LAST:event_txtBuscaridKeyReleased
 
+    /**
+     * Acción que se ejecuta cuando el usuario busca un cliente por nombre.
+     * 
+     * @param evt el evento de acción
+     */
     private void txtBuscarNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarNombreKeyReleased
         consultaDinamica();
     }//GEN-LAST:event_txtBuscarNombreKeyReleased
 
+    /**
+     * Acción que se ejecuta cuando se presiona el botón para salir de la aplicación.
+     * 
+     * @param evt el evento de acción
+     */
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    /**
+     * Acción para generar un reporte de los clientes en el sistema.
+     * 
+     * Si hay clientes disponibles en la lista, genera un reporte mediante la clase 
+     * GenerarReportes. Si no hay clientes, muestra un mensaje informativo.
+     * 
+     * @param evt el evento de acción
+     */
     private void btnReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteActionPerformed
         // TODO add your handling code here:
         if (!clientes.isEmpty()) {

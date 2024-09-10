@@ -10,7 +10,13 @@ import negocio.ClienteDTO;
 import negocio.ClientesBO;
 
 /**
- *
+ * La clase Detalle proporciona una interfaz gráfica para visualizar, 
+ * actualizar o eliminar la información de un cliente en el sistema.
+ * 
+ * Esta ventana extiende JFrame y recibe un objeto ClienteDTO
+ * representando al cliente que se quiere visualizar o modificar. Permite actualizar 
+ * los datos del cliente o eliminarlo del sistema.
+ * 
  * @author af_da
  */
 public class Detalle extends javax.swing.JFrame {
@@ -19,7 +25,12 @@ public class Detalle extends javax.swing.JFrame {
     private ClientesBO clientesBO;
 
     /**
-     * Creates new form Detalle
+     * Crea una nueva ventana Detalle para un cliente específico.
+     * 
+     * Inicializa los componentes gráficos y recibe un ClienteDTO
+     * representando al cliente cuyos detalles se desean mostrar o modificar.
+     * 
+     * @param clienteOriginal el cliente cuyos detalles serán mostrados en la interfaz.
      */
     public Detalle(ClienteDTO clienteOriginal) {
         initComponents();
@@ -121,6 +132,14 @@ public class Detalle extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción que se ejecuta al presionar el botón "Actualizar".
+     * 
+     * Verifica si los campos de texto son válidos y, en caso afirmativo, 
+     * actualiza la información del cliente en el sistema a través de ClientesBO.
+     * 
+     * @param evt el evento de acción generado al presionar el botón.
+     */
     private void bntActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntActualizarActionPerformed
         if (validarCampos(txtID.getText(), txtNombre.getText())){
         clientesBO.actualizarCliente(clienteOriginal, new ClienteDTO(txtID.getText(), txtNombre.getText()));
@@ -130,6 +149,15 @@ public class Detalle extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bntActualizarActionPerformed
 
+    /**
+     * Acción que se ejecuta al presionar el botón "Eliminar".
+     * 
+     * Solicita confirmación para eliminar al cliente, y si el usuario 
+     * acepta, elimina el cliente utilizando ClientesBO y regresa a 
+     * la ventana principal Inicio.
+     * 
+     * @param evt el evento de acción generado al presionar el botón.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int option = JOptionPane.showConfirmDialog(this, "Seguro que desea eliminar al cliente?");
         if (option == JOptionPane.YES_OPTION) {
@@ -141,30 +169,51 @@ public class Detalle extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    /**
+     * Acción que se ejecuta al presionar el botón "Volver".
+     * 
+     * Regresa a la ventana principal Inicio sin realizar cambios.
+     * 
+     * @param evt el evento de acción generado al presionar el botón.
+     */
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         Inicio inicio = new Inicio();
         inicio.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    private boolean validarCampos(String id, String nombre){
+    /**
+     * Valida los campos del formulario.
+     * 
+     * Verifica que los campos de ID y nombre no estén vacíos, que el ID 
+     * tenga el formato correcto (debe comenzar con "CL" seguido de números), 
+     * y que el ID no esté ya registrado en el sistema a menos que sea el 
+     * cliente original.
+     * 
+     * @param id el ID del cliente ingresado
+     * @param nombre el nombre del cliente ingresado
+     * @return true si los campos son válidos, false de lo contrario
+     */
+    private boolean validarCampos(String id, String nombre) {
         if (id.isBlank() && nombre.isBlank()) {
             JOptionPane.showMessageDialog(this, "El id y nombre no pueden estar vacios", "Revisar información", JOptionPane.INFORMATION_MESSAGE);
             return false;
         } else {
-            if(!id.matches("CL\\d+")){
-                JOptionPane.showMessageDialog(this, "El id debe tener un formato 'CL1' donde el numero puede cambiar","información", JOptionPane.INFORMATION_MESSAGE);
+            if (!id.matches("CL\\d+")) {
+                JOptionPane.showMessageDialog(this, "El id debe tener un formato 'CL1' donde el numero puede cambiar", "información", JOptionPane.INFORMATION_MESSAGE);
                 return false;
             } else {
-                ClienteDTO cliente = new ClienteDTO(id, nombre);
-                ClienteDTO clienteExistente = clientesBO.encontrarCliente(cliente);
-                if (clienteExistente != null) {
-                    JOptionPane.showMessageDialog(this, "El id ya se encuentra registrado","información", JOptionPane.INFORMATION_MESSAGE);
-                    return false;
+                if (!clienteOriginal.getID().equalsIgnoreCase(id)) {
+                    ClienteDTO cliente = clientesBO.encontrarClienteID(id);
+                    if (cliente != null) {
+                        JOptionPane.showMessageDialog(this, "El id ya se encuentra registrado", "información", JOptionPane.INFORMATION_MESSAGE);
+                        return false;
+                    }
                 }
+
             }
         }
-        
+
         return true;
     }
     

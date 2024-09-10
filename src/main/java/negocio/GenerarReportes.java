@@ -28,11 +28,26 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
- *
+ * La clase GenerarReportes se encarga de generar reportes de clientes
+ * utilizando la biblioteca JasperReports.
+ * 
+ * Esta clase toma una lista de objetos {@code ClienteDTO} y genera un reporte
+ * en base a dicha lista, utilizando un archivo de diseño JasperReports (.jrxml)
+ * 
  * @author alex_
  */
 public class GenerarReportes {
 
+    /**
+     * Genera un reporte de clientes basado en una lista de ClienteDTO.
+     * 
+     * Este método utiliza JasperReports para crear un reporte desde un archivo de
+     * diseño (.jrxml), llenar el reporte con los datos de los clientes y mostrarlo
+     * en el visor de JasperReports.
+     * 
+     * @param listaClientes una lista de objetos ClienteDTO que contiene los datos de los clientes a incluir en el reporte.
+     * @return true si el reporte se generó correctamente, false si hubo algún error durante el proceso.
+     */
     public boolean generarReporte(List<ClienteDTO> listaClientes) {
         // Crear un JRBeanCollectionDataSource con la lista de TramiteReporteDTO
         JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listaClientes);
