@@ -120,8 +120,20 @@ public class Pruebas {
      * Test para obtener una lista por filtros en el sistema.
      */
     @Test
+    public void testReporte() {
+        System.out.println("Test CP-005: Tests que se encarga de verificar que se puede generar un reporte correctamente.");
+
+        // Verificar que el reporte se puede crear
+        assertTrue(reporte.generarReporte(clientesBO.getClientes()));
+
+    }
+    
+    /**
+     * Test para obtener una lista por filtros en el sistema.
+     */
+    @Test
     public void testFiltro() {
-        System.out.println("Test CP-005: Tests que se encarga de verificar que los filtros funcionan correctamente.");
+        System.out.println("Test CP-006: Tests que se encarga de verificar que los filtros funcionan correctamente.");
 
         // Crear cliente de prueba
         ClienteDTO nuevoCliente = new ClienteDTO("CL9", "Juan");
@@ -144,16 +156,6 @@ public class Pruebas {
 
     }
     
-    /**
-     * Test para obtener una lista por filtros en el sistema.
-     */
-    @Test
-    public void testReporte() {
-        System.out.println("Test CP-006: Tests que se encarga de verificar que se puede generar un reporte correctamente.");
 
-        // Verificar que el reporte se puede crear
-        assertTrue(reporte.generarReporte(clientesBO.getClientes()));
-
-    }
     
 }
