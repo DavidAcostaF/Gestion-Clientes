@@ -3,6 +3,7 @@ package pruebas;
 import java.util.List;
 import negocio.ClienteDTO;
 import negocio.ClientesBO;
+import negocio.GenerarReportes;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,10 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Pruebas {
     
     private ClientesBO clientesBO;
+    private GenerarReportes reporte;
     
     public Pruebas() {
         clientesBO = ClientesBO.getInstance();
-        
+        reporte = new GenerarReportes();
     }
     
     /**
@@ -86,6 +88,9 @@ public class Pruebas {
         
     }
     
+    /**
+     * Test para obtener la lista de clientes en el sistema.
+     */
     @Test
     public void testListar() {
         // Crear cliente de prueba
@@ -102,6 +107,43 @@ public class Pruebas {
 
         // Verificar que la lista no está vacía
         assertFalse(clientes.isEmpty());
+
+    }
+    
+    /**
+     * Test para obtener una lista por filtros en el sistema.
+     */
+    @Test
+    public void testFiltro() {
+        // Crear cliente de prueba
+        ClienteDTO nuevoCliente = new ClienteDTO("CL9", "Juan");
+        ClienteDTO clienteNoExistente = new ClienteDTO("CL10", "Ana");
+
+        // Agregar el cliente al sistema
+        clientesBO.addCliente(nuevoCliente);
+
+        // Recuperar lista de clientes con un parametro especifico
+        List<ClienteDTO> clientes = clientesBO.encontrarClientes(clienteNoExistente);
+
+        // Verificar que la lista se recupero esta vacia
+        assertTrue(clientes.isEmpty());
+
+        // Recuperar clientes existentes
+        clientes = clientesBO.encontrarClientes(nuevoCliente);
+        
+        // Verificar que la lista no está vacía
+        assertFalse(clientes.isEmpty());
+
+    }
+    
+    /**
+     * Test para obtener una lista por filtros en el sistema.
+     */
+    @Test
+    public void testReporte() {
+        
+        // Verificar que el reporte se puede crear
+        assertTrue(reporte.generarReporte(clientesBO.getClientes()));
 
     }
     
