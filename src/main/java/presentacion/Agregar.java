@@ -5,6 +5,7 @@
 package presentacion;
 
 import dominio.Cliente;
+import javax.swing.JOptionPane;
 import negocio.ClienteDTO;
 import negocio.ClientesBO;
 
@@ -101,15 +102,36 @@ public class Agregar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        String id = txtID.getText();
-        String nombre = txtNombre.getText();
-        clientesBO.addCliente(new ClienteDTO(id,nombre));
-        Inicio inicio = new Inicio();
-        inicio.setVisible(true);
-        this.dispose();
+        if (validarCampos(txtID.getText(), txtNombre.getText())) {
+            String id = txtID.getText();
+            String nombre = txtNombre.getText();
+            clientesBO.addCliente(new ClienteDTO(id, nombre));
+            Inicio inicio = new Inicio();
+            inicio.setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-
+    private boolean validarCampos(String id, String nombre){
+        if (id.isBlank() && nombre.isBlank()) {
+            JOptionPane.showMessageDialog(this, "El id y nombre no pueden estar vacios", "Revisar información", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        } else {
+            if(!id.matches("CL\\d+")){
+                JOptionPane.showMessageDialog(this, "El id debe tener un formato 'CL1' donde el numero puede cambiar","información", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            } else {
+                ClienteDTO cliente = new ClienteDTO(id, nombre);
+                ClienteDTO clienteExistente = clientesBO.encontrarCliente(cliente);
+                if (clienteExistente != null) {
+                    JOptionPane.showMessageDialog(this, "El id ya se encuentra registrado","información", JOptionPane.INFORMATION_MESSAGE);
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

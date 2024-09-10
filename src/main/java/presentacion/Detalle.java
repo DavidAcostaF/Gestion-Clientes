@@ -122,10 +122,12 @@ public class Detalle extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntActualizarActionPerformed
+        if (validarCampos(txtID.getText(), txtNombre.getText())){
         clientesBO.actualizarCliente(clienteOriginal, new ClienteDTO(txtID.getText(), txtNombre.getText()));
         Inicio inicio = new Inicio();
         inicio.setVisible(true);
         this.dispose();
+        }
     }//GEN-LAST:event_bntActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -145,6 +147,27 @@ public class Detalle extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private boolean validarCampos(String id, String nombre){
+        if (id.isBlank() && nombre.isBlank()) {
+            JOptionPane.showMessageDialog(this, "El id y nombre no pueden estar vacios", "Revisar información", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        } else {
+            if(!id.matches("CL\\d+")){
+                JOptionPane.showMessageDialog(this, "El id debe tener un formato 'CL1' donde el numero puede cambiar","información", JOptionPane.INFORMATION_MESSAGE);
+                return false;
+            } else {
+                ClienteDTO cliente = new ClienteDTO(id, nombre);
+                ClienteDTO clienteExistente = clientesBO.encontrarCliente(cliente);
+                if (clienteExistente != null) {
+                    JOptionPane.showMessageDialog(this, "El id ya se encuentra registrado","información", JOptionPane.INFORMATION_MESSAGE);
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntActualizar;
     private javax.swing.JButton btnEliminar;

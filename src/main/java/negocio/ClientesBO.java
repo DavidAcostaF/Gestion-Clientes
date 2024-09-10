@@ -53,8 +53,12 @@ public class ClientesBO {
     }
 
     public ClienteDTO encontrarCliente(ClienteDTO cliente) {
-        Cliente c = clientesDAO.encontrarCliente(new Cliente(cliente.getID(),cliente.getNombre()));
-        return new ClienteDTO(c.getID(),c.getNombre());
+        Cliente c = clientesDAO.encontrarCliente(new Cliente(cliente.getID(), cliente.getNombre()));
+        if (c != null) {
+            return new ClienteDTO(c.getID(), c.getNombre());
+        } else {
+            return null;
+        }
     }
 
     public void actualizarCliente(ClienteDTO clienteInfo, ClienteDTO clienteNuevo) {
