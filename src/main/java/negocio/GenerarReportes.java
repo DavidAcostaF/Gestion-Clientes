@@ -33,7 +33,7 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class GenerarReportes {
 
-    public void generarReporte(List<ClienteDTO> listaClientes) {
+    public boolean generarReporte(List<ClienteDTO> listaClientes) {
         // Crear un JRBeanCollectionDataSource con la lista de TramiteReporteDTO
         JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listaClientes);
         // Parámetros para el reporte
@@ -49,10 +49,12 @@ public class GenerarReportes {
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
 
             // Mostrar el reporte en el visor
-            JasperViewer.viewReport(jasperPrint, false); 
+            JasperViewer.viewReport(jasperPrint, false);
+            return true;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return false;
     }
 
 }
