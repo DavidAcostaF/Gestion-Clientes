@@ -26,7 +26,7 @@ public class Pruebas {
      */
     @Test
     public void testAgregar() {
-        System.out.println("Test 01: Tests que se encarga de agregar un cliente nuevo correctamente");
+        System.out.println("Test CP-001: Tests que se encarga de agregar un cliente nuevo correctamente");
         // Crear cliente de prueba
         ClienteDTO nuevoCliente = new ClienteDTO("CL1", "Juan");
 
@@ -49,7 +49,7 @@ public class Pruebas {
      */
     @Test
     public void testModificar() {
-        System.out.println("Test 02: Tests que se encarga de modificar un cliente correctamente");
+        System.out.println("Test CP-002: Tests que se encarga de modificar un cliente correctamente");
         // Crear cliente de prueba
         ClienteDTO nuevoCliente = new ClienteDTO("CL1", "Juan");
         ClienteDTO nuevosDatos = new ClienteDTO("CL2", "Pedro");
@@ -73,7 +73,7 @@ public class Pruebas {
      */
     @Test
     public void testEliminar() {
-        System.out.println("Test 03: Tests que se encarga de eliminar un cliente correctamente");
+        System.out.println("Test CP-003: Tests que se encarga de eliminar un cliente correctamente");
 
         // Crear cliente de prueba
         ClienteDTO nuevoCliente = new ClienteDTO("CL4", "Luis");
@@ -97,7 +97,7 @@ public class Pruebas {
      */
     @Test
     public void testListar() {
-        System.out.println("Test 04: Tests que se encarga de listar los clientes correctamente");
+        System.out.println("Test CP-004: Tests que se encarga de listar los clientes correctamente");
 
         // Crear cliente de prueba
         ClienteDTO nuevoCliente = new ClienteDTO("CL8", "Juan");
@@ -121,7 +121,7 @@ public class Pruebas {
      */
     @Test
     public void testFiltro() {
-        System.out.println("Test 05: Tests que se encarga de verificar que los filtros funcionan correctamente");
+        System.out.println("Test CP-005: Tests que se encarga de verificar que los filtros funcionan correctamente");
 
         // Crear cliente de prueba
         ClienteDTO nuevoCliente = new ClienteDTO("CL9", "Juan");
@@ -149,7 +149,7 @@ public class Pruebas {
      */
     @Test
     public void testReporte() {
-        System.out.println("Test 06: Tests que se encarga de verificar que se puede generar un reporte correctamente");
+        System.out.println("Test CP-005: Tests que se encarga de verificar que se puede generar un reporte correctamente");
 
         // Verificar que el reporte se puede crear
         assertTrue(reporte.generarReporte(clientesBO.getClientes()));
